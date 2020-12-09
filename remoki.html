@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <title>Static example</title>
+
+  <style>
+  html {
+    /* no 300ms touch delay*/
+    touch-action : manipulation;
+  }
+  p {
+    font-size: 2rem
+  }
+  .heading {
+    border: 5px outset red;
+    background-color: lightblue;
+    text-align: center;
+    font-size: 4rem;
+  }
+  #response_text{
+    font-size: 3rem
+  }
+  #senden{
+    font-size: 3rem 
+  }
+  </style>
+
+  <!-- /* no 300ms touch delay*/ -->
+  <meta name="viewport" content="width=device-width,   user-scaleable=no">
+  
+  </head>
+
+
+
+  <body oncontextmenu="event.preventDefault(); return false;">
+    <div class="heading">
+      <H1>RemoKi</H1>
+    </div>
+    <!-- <input type="message" id="username"> -->
+    <!-- <button type='button' id='senden' onclick="alert('asdf');" >upsa ldkflsk jd </button> -->
+    
+    <div id="response_text">...</div>
+<!-- <p> bla blub</p> -->
+
+    <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <script>
+      var taste;
+      var ws;
+      function onButton(){
+        button = $('#senden')[0]
+        username = $('#username')[0].value
+        ws.send(username)
+        alert('oB ' + username)
+      }
+
+      function onKeyUp(e) {
+          taste = e;
+          ws.send("keyup " + e.keyCode);
+      }
+
+      function onKeyPress(e) {
+          taste = e;
+          ws.send("keydown " + e.keyCode);
+      }
+      function onMouseDown(e) {
+          taste = e;
+          ws.send("mousedown " + e.button);
+      }
+
+      function onMouseUp(e) {
+          taste = e;
+          ws.send("mouseup " + e.button);
+      }
+
+
+      function connect() {
+        ws = new WebSocket('ws://192.168.178.58:8765')
+        ws.onopen = function() {
+          ws.send('connect')
+          // alert("Message is sent...");
+        };
+
+        ws.onmessage = function (evt) { 
+          var received_msg = evt.data;
+          txt = $('#response_text')[0] 
+          txt.textContent = received_msg
+          // alert("Message is received..." + received_msg);
+        };
+
+        ws.onclose = function (evt){
+          console.log('socket closed. Trying to reconnect.');
+          setTimeout(function(){
+            connect();
+          }, 1000);
+        }
+      }
+      
+      connect();
+
+      document.onkeyup     = onKeyUp;
+      document.onkeydown   = onKeyPress;
+      document.onmousedown = onMouseDown;
+      document.onmouseup   = onMouseUp;
+
+    </script>
+  </body>
+
+</html>
+
