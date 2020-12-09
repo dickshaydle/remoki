@@ -5,18 +5,36 @@
 
   <style>
   html {
+    color: white;
+    background-color: #121419;
     /* no 300ms touch delay*/
     touch-action : manipulation;
   }
   p {
     font-size: 2rem
   }
-  .heading {
-    border: 5px outset red;
-    background-color: lightblue;
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: gray;
+    color: white;
     text-align: center;
-    font-size: 4rem;
   }
+/*  footer {
+    clear: both;
+    position: relative;
+    height: 200px;
+    margin-top: -200px;
+  }*/
+  .heading {
+    border: 5vw outset darkblue;
+    background-color: darkblue;
+    text-align: center;
+    font-size: 6vw;
+  }
+
   #response_text{
     font-size: 3rem
   }
@@ -26,13 +44,13 @@
   </style>
 
   <!-- /* no 300ms touch delay*/ -->
-  <meta name="viewport" content="width=device-width,   user-scaleable=no">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
   
   </head>
 
 
 
-  <body oncontextmenu="event.preventDefault(); return false;">
+  <body>
     <div class="heading">
       <H1>RemoKi</H1>
     </div>
@@ -41,6 +59,9 @@
     
     <div id="response_text">...</div>
 <!-- <p> bla blub</p> -->
+    <div class="footer">
+      <a href=https://github.com/dickshaydle/remoki> source </a>
+    </div>
 
     <script src="https://www.google.com/jsapi" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -76,7 +97,7 @@
 
 
       function connect() {
-        ws = new WebSocket('ws://192.168.178.58:8765')
+        ws = new WebSocket('ws://haeckel.p7.de:8001')
         ws.onopen = function() {
           ws.send('connect')
           // alert("Message is sent...");
@@ -103,6 +124,7 @@
       document.onkeydown   = onKeyPress;
       document.onmousedown = onMouseDown;
       document.onmouseup   = onMouseUp;
+      document.oncontextmenu = (e) => {e.preventDefault(); return false};
 
     </script>
   </body>

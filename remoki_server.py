@@ -51,6 +51,9 @@ async def forward_key_events(websocket, path):
           if event == 'mouseup':
             mouse.release(button[keycode_number])
 
+      # left/right
+      # if (event.location == 1) console.log('left ctrl');
+      # if (event.location == 2) console.log('right ctrl');
       if event == 'keydown':
         keyboard.press(key)
           # keyboard.touch(key, True)
@@ -73,7 +76,7 @@ async def forward_key_events(websocket, path):
 
 keyboard = KBController()
 mouse = MouseController()
-start_server = websockets.serve(forward_key_events, '192.168.178.58', 8765, ping_interval=None)
+start_server = websockets.serve(forward_key_events, '192.168.178.58', 8001, ping_interval=None)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
